@@ -2184,6 +2184,7 @@ static int qpnp_regulator_probe(struct platform_device *pdev)
 	vreg->regmap = dev_get_regmap(pdev->dev.parent, NULL);
 	if (!vreg->regmap) {
 		dev_err(&pdev->dev, "Couldn't get parent's regmap\n");
+		kfree(vreg);
 		return -EINVAL;
 	}
 
@@ -2422,7 +2423,6 @@ int __init qpnp_regulator_init(void)
 
 	return platform_driver_register(&qpnp_regulator_driver);
 }
-EXPORT_SYMBOL(qpnp_regulator_init);
 
 static void __exit qpnp_regulator_exit(void)
 {
